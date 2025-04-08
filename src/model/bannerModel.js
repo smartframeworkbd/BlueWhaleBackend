@@ -20,7 +20,7 @@ const bannerModel = sequelize.define('Banners', {
         type: DataTypes.STRING
     },
     button: {
-        type: DataTypes.ARRAY(DataTypes.JSON),    },
+        type: DataTypes.JSON    },
     order: {
         type: DataTypes.INTEGER
     },

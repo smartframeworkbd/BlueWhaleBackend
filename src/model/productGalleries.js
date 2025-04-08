@@ -9,30 +9,34 @@ const productGalleriesModel = sequelize.define('productGalleries', {
     primaryKey: true,
     allowNull: false,
   },
-  productId:{
-    type:DataTypes.INTEGER
+  productId: {
+    type: DataTypes.INTEGER,
+    allowNull: false, // Make sure productId is required
+    references: {
+      model: productModel, // Reference the productModel
+      key: 'Id', // The referenced key in the product model
+    },
   },
-  title:{
-    type:DataTypes.STRING
-
+  title: {
+    type: DataTypes.STRING,
   },
-  image:{
-    type:DataTypes.JSON
-
-  },order:{
-    type:DataTypes.INTEGER
-
+  image: {
+    type: DataTypes.JSON,
   },
-  order:{
-    type:DataTypes.BOOLEAN, 
-    defaultValue:true
-
+  orderNumber: {  // Renamed to avoid conflict
+    type: DataTypes.INTEGER,
   },
- 
+  isActive: {  // Renamed to clarify its meaning
+    type: DataTypes.BOOLEAN,
+    defaultValue: true,
+  },
 }, {
-  tableName:"productgalleries",
+  tableName: "productgalleries",
   timestamps: true,
 });
-productModel.hasMany(productGalleriesModel,{foreignKey:"productId",as:"productGalleries"})
-productModel.belongsTo(productModel,{foreignKey:"Id"})
+
+// Correct associations
+productModel.hasMany(productGalleriesModel, { foreignKey: "productId", as: "productGalleries" });
+productGalleriesModel.belongsTo(productModel, { foreignKey: "productId" }); // Corrected the belongsTo relationship
+
 export default productGalleriesModel;

@@ -10,10 +10,16 @@ const productInCategory = sequelize.define('productInCategory', {
     allowNull: false,
   },
   productId:{
-    type:DataTypes.INTEGER
+    type:DataTypes.INTEGER,
+    allowNull: false, // Ensure productId is not null
+    references: {
+      model: productModel, // Reference the productModel
+      key: 'Id', // The referenced key in the product model
+    },
   },
   categoryId:{
-    type:DataTypes.INTEGER
+    type:DataTypes.INTEGER,
+    allowNull: false,
 
   }
  
@@ -21,6 +27,8 @@ const productInCategory = sequelize.define('productInCategory', {
   tableName:"productincategories",
   timestamps: true,
 });
-productModel.hasMany(productInCategory,{foreignKey:"productId",as:"productInCategory"})
-productInCategory.belongsTo(productModel,{foreignKey:"Id"})
+productModel.hasMany(productInCategory, { foreignKey: "productId", as: "productInCategory" });
+productInCategory.belongsTo(productModel, { foreignKey: "Id" });
+
+
 export default productInCategory;
