@@ -1,0 +1,53 @@
+on: 
+  push:
+    branches:
+      - main
+
+name: 🚀 Deploy Node.js Backend on Push
+
+jobs:
+  backend-deploy:
+    name: 🎉 Deploy Backend
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 🚚 Get Latest Code
+      uses: actions/checkout@v3
+
+    - name: Use Node.js 20
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20'
+
+    - name: 🔨 Install Dependencies
+      run: |
+        npm install
+
+    # - name: 🧪 Run Tests (Optional)
+    #   run: |
+    #     npm test
+
+    # - name: 📦 Build Project (Optional)
+    #   run: |
+    #     npm run build
+
+
+    # n_j[-p?Z$4%-
+
+    - name: 📂 Sync Files
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{ secrets.GIT_BACKEND_SERVER }}
+        username: ${{ secrets.GIT_BACKEND_USER }}
+        password: ${{ secrets.GIT_BACKEND_PWD }}
+        protocol: ${{ secrets.GIT_BACKEND_PROTOCOL }}
+        local-dir: ./ 
+        verbose: true
+        dangerous-clean-slate: true
+
+    # - name: 🚀 Restart Backend (Optional)
+    #   run: |
+    #     ssh -o StrictHostKeyChecking=no ${{ secrets.BACKEND_SSH_USER }}@${{ secrets.BACKEND_SSH_HOST }} << 'EOF'
+    #     pm2 restart all # or replace with your backend service restart command
+    #     EOF
+# ~%hbu%IC83wD
